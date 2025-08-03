@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+cli/synapse/__init__.py
+cli/synapse/__main__.py
+cli/synapse.egg-info/PKG-INFO
+cli/synapse.egg-info/SOURCES.txt
+cli/synapse.egg-info/dependency_links.txt
+cli/synapse.egg-info/entry_points.txt
+cli/synapse.egg-info/requires.txt
+cli/synapse.egg-info/top_level.txt
+tests/test_smoke.py

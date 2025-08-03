@@ -7,3 +7,6 @@ dependencies = ["typer>=0.12"]
 
 [project.scripts]
 synapse = "synapse.__main__:app"
+
+[tool.setuptools.packages.find]
+where = ["cli"]
