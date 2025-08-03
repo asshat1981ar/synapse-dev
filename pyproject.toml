@@ -1,0 +1,9 @@
+[project]
+name = "synapse"
+version = "0.1.0"
+description = "Synapse AI App-Builder CLI"
+requires-python = ">=3.11"
+dependencies = ["typer>=0.12"]
+
+[project.scripts]
+synapse = "synapse.__main__:app"

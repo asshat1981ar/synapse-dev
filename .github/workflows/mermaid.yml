@@ -1,0 +1,14 @@
+name: Auto-diagram
+on: [push]
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout @v4
+      - uses: actions/setup-node @v4
+      - run: npm i -g @mermaid-js/mermaid-cli
+      - run: bash scripts/mermaid_render.sh
+      - uses: actions/upload-artifact @v4
+        with:
+          name: diagrams
+          path: docs/out

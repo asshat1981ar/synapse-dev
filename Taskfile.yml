@@ -1,0 +1,40 @@
+version: '3'
+
+vars:
+  GATEWAY_APP: "apps/gateway/app.py"
+
+tasks:
+  dev:
+    desc: "Run local dev (gateway hot-reload)"
+    cmds:
+      - uvicorn {{.GATEWAY_APP}}:app --reload --port 8080
+
+  mermaid:
+    desc: "Render Mermaid diagrams"
+    cmds:
+      - bash scripts/mermaid_render.sh
+
+  mermaid-watch:
+    desc: "Watch & render on save (simple loop)"
+    cmds:
+      - while true; do inotifywait -e modify docs/*.mmd && bash scripts/mermaid_render.sh; done
+    silent: true
+
+  check:
+    desc: "Lint + tests"
+    cmds:
+      - ruff check .
+      - pytest -q
+
+  init:
+    desc: "Bootstrap venv & deps"
+    cmds:
+      - python -m venv .venv
+      - . .venv/bin/activate && pip install -U pip wheel
+      - . .venv/bin/activate && pip install -e .
+      - . .venv/bin/activate && pip install fastapi uvicorn typer pytest ruff
+
+  cli:
+    desc: "Run CLI"
+    cmds:
+      - . .venv/bin/activate && python -m synapse --help

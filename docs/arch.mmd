@@ -1,0 +1,9 @@
+C4Context
+  title System Context for Synapse AI Builder
+  Person(dev, "Developer", "A SaaS builder")
+  System(syn, "Synapse Platform", "AI app-builder")
+  System_Ext(oai, "OpenAI", "LLM provider")
+  System_Ext(stripe, "Stripe", "Billing")
+  Rel(dev, syn, "creates apps via", "HTTPS/WebRTC")
+  Rel(syn, oai, "routes prompts", "HTTPS")
+  Rel(syn, stripe, "reports usage", "HTTPS")
