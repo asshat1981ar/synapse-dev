@@ -15,3 +15,21 @@ jobs:
       - run: pip install fastapi uvicorn typer pytest ruff
       - run: ruff check .
       - run: pytest -q
+
+  terraform-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6
+
+      - name: Terraform Init
+        run: terraform -chdir=infra/tf init
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+
+      - name: Terraform Plan
+        run: terraform -chdir=infra/tf plan
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
