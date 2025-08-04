@@ -1,13 +1,13 @@
 version: '3'
 
 vars:
-  GATEWAY_APP: "apps/gateway/app.py"
+  GATEWAY_APP: "apps.gateway.app"
 
 tasks:
   dev:
     desc: "Run local dev (gateway hot-reload)"
     cmds:
-      - uvicorn {{.GATEWAY_APP}}:app --reload --port 8080
+      - .venv/bin/uvicorn {{.GATEWAY_APP}}:app --reload --port 8080
 
   mermaid:
     desc: "Render Mermaid diagrams"
@@ -32,9 +32,19 @@ tasks:
       - python -m venv .venv
       - . .venv/bin/activate && pip install -U pip wheel
       - . .venv/bin/activate && pip install -e .
-      - . .venv/bin/activate && pip install fastapi uvicorn typer pytest ruff
+      - . .venv/bin/activate && pip install fastapi uvicorn typer pytest ruff opentelemetry-api opentelemetry-sdk opentelemetry-instrumentation-fastapi opentelemetry-exporter-otlp-proto-http litellm openai python-dotenv
 
   cli:
     desc: "Run CLI"
     cmds:
       - . .venv/bin/activate && python -m synapse --help
+
+  up:o11y:
+    desc: "Start the observability stack (Jaeger)"
+    cmds:
+      - docker-compose up -d
+
+  down:o11y:
+    desc: "Stop the observability stack"
+    cmds:
+      - docker-compose down
